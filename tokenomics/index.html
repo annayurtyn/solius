@@ -90,7 +90,7 @@ header.hero{
   padding:36px 48px 28px;
   border-bottom:1px solid var(--line);
   display:grid;
-  grid-template-columns:1fr auto;
+  grid-template-columns:1fr auto auto;
   align-items:end;
   gap:24px;
 }
@@ -216,7 +216,7 @@ h1.title .accent{color:var(--blue);}
 .divider{height:1px;background:var(--line);margin:0 48px;}
 
 /* VESTING */
-.vesting-wrap{padding:0 48px 40px;}
+.vesting-wrap{padding:16px 48px 40px;}
 .vchart{
   display:flex;
   align-items:flex-end;
@@ -313,18 +313,10 @@ h1.title .accent{color:var(--blue);}
   text-transform:uppercase;letter-spacing:0.05em;
   color:var(--ink);margin-bottom:14px;
 }
-.tcard .ti{
-  display:flex;align-items:flex-start;gap:8px;
-  font-size:12px;color:var(--ink-dim);line-height:1.5;
-  margin-bottom:7px;
+.tcard .tp{
+  font-size:12px;color:var(--ink-dim);line-height:1.7;
 }
-.tcard .ti::before{
-  content:"→";font-family:'JetBrains Mono',monospace;font-size:9px;
-  flex-shrink:0;margin-top:2px;
-}
-.tcard.tb .ti::before{color:var(--blue);}
-.tcard.tr .ti::before{color:var(--red);}
-.tcard .ti b{color:var(--ink);font-weight:600;}
+.tcard .tp b{color:var(--ink);font-weight:600;}
 .tmilestone{
   margin-top:12px;padding:8px 12px;
   background:rgba(255,85,88,0.08);
@@ -446,7 +438,9 @@ footer.foot{
   font-weight:800;letter-spacing:0.04em;text-transform:uppercase;
   color:var(--ink);line-height:1.1;
 }
-.foot-mark .wp span{color:var(--red);}
+.foot-mark .wp span{color:var(--blue);}
+.mascot-wrap{width:150px;height:160px;align-self:end;margin-bottom:-28px;pointer-events:none;flex-shrink:0;}
+.mascot-wrap img{width:100%;height:100%;object-fit:contain;object-position:bottom;}
 .foot-mark .wp-date{
   font-family:'JetBrains Mono',monospace;font-size:10px;
   letter-spacing:0.2em;color:var(--ink-dim);text-transform:uppercase;
@@ -493,14 +487,17 @@ footer.foot{
         <div class="name">SOLIUS</div>
       </div>
       <p class="kicker">Token Economics · Q4 2026 Launch</p>
-      <h1 class="title">Token<br><span class="accent">omika.</span></h1>
+      <h1 class="title">Token<span class="accent">omika.</span></h1>
     </div>
     <div class="hero-meta">
       <div>Network · <b>Solana</b></div>
-      <div>Ticker · <b>$SOL</b></div>
+      <div>Ticker · <b>$SOLIUS</b></div>
       <div>Vesting · <b>12 měsíců</b></div>
       <div>Whitepaper · <b>15.05.2026</b></div>
       <div>Rev. · <b>v1.0</b></div>
+    </div>
+    <div class="mascot-wrap">
+      <img src="Gemini_Generated_Image_za35ooza35ooza35-removebg-preview.png" alt="SOLIUS mascot"/>
     </div>
   </header>
 
@@ -784,18 +781,13 @@ footer.foot{
     <div class="tcard tb">
       <div class="tn">25%</div>
       <div class="tl">Automatický staking</div>
-      <div class="ti">Z celkové <b>35% týmové alokace</b> jde 25 % rovnou do stakingu.</div>
-      <div class="ti">Minimální délka stakingu <b>24 měsíců</b>.</div>
-      <div class="ti">Horizont stakingu <b>2 – 10 let</b> dle rozhodnutí týmu.</div>
-      <div class="ti">Plná participace na <b>staking rewards</b> a flywheel modelu.</div>
+      <p class="tp">Z celkové <b>35% týmové alokace</b> jde rovných <b>25 %</b> automaticky do stakingu od prvního dne. Minimální délka uzamčení je <b>24 měsíců</b>, s horizontem <b>2 – 10 let</b> dle rozhodnutí týmu. Tato část se plně účastní <b>staking rewards</b> a flywheel modelu.</p>
     </div>
 
     <div class="tcard tr">
       <div class="tn">10%</div>
       <div class="tl">Odemykání dle milníků</div>
-      <div class="ti">Podmínky definovány ve <b>whitepaperu 15. 5. 2026</b>.</div>
-      <div class="ti">Tokeny se odemknou až při dosažení <b>min. valuace $300 M</b>.</div>
-      <div class="ti">Před splněním podmínek <b>žádné tokeny týmu nezíská</b>.</div>
+      <p class="tp">Zbývajících <b>10 %</b> se odemyká výhradně na základě dosažených milníků definovaných ve <b>whitepaperu 15. 5. 2026</b>. Základní podmínkou je dosažení <b>minimální valuace $300 M</b>. Dokud tato hranice není překročena, tým <b>nezíská žádné tokeny</b> z tohoto poolu.</p>
       <div class="tmilestone">
         ⚑ &nbsp; Min. valuace $300 M · Whitepaper 15.05.2026
       </div>
@@ -822,7 +814,7 @@ footer.foot{
       </div>
       <div class="bc">
         <div class="bc-icon">📈</div>
-        <div class="bc-title">Měsíční $SOL zisk</div>
+        <div class="bc-title">Měsíční $SOLIUS zisk</div>
         <div class="bc-desc">Pravidelný přísun Solius tokenů za věrnost.</div>
       </div>
       <div class="bc">
@@ -857,50 +849,6 @@ footer.foot{
       </div>
     </div>
 
-    <!-- TIER TABLE -->
-    <div class="tiers">
-      <div class="tier t1">
-        <div class="tier-name">Bronze</div>
-        <div class="tier-dur">1 rok</div>
-        <div class="tf on">Měsíční dividendy</div>
-        <div class="tf on">Snížené poplatky</div>
-        <div class="tf on">Měsíční $SOL</div>
-        <div class="tf">Plán zdarma</div>
-        <div class="tf">Inkubátor airdrop</div>
-        <div class="tf">Early access</div>
-      </div>
-      <div class="tier t2">
-        <div class="tier-name">Silver</div>
-        <div class="tier-dur">2 roky</div>
-        <div class="tf on">Měsíční dividendy +</div>
-        <div class="tf on">Nižší poplatky</div>
-        <div class="tf on">Měsíční $SOL</div>
-        <div class="tf on">Plán se slevou</div>
-        <div class="tf">Inkubátor airdrop</div>
-        <div class="tf">Early access</div>
-      </div>
-      <div class="tier t3">
-        <div class="tier-name">Gold</div>
-        <div class="tier-dur">3 roky</div>
-        <div class="tf on">Měsíční dividendy ++</div>
-        <div class="tf on">Min. poplatky</div>
-        <div class="tf on">Měsíční $SOL</div>
-        <div class="tf on">Plán zdarma</div>
-        <div class="tf on">Inkubátor airdrop</div>
-        <div class="tf">Early access</div>
-      </div>
-      <div class="tier t4">
-        <div class="tier-name">Platinum</div>
-        <div class="tier-dur">5 let</div>
-        <div class="tf on">Měsíční dividendy MAX</div>
-        <div class="tf on">0 poplatků</div>
-        <div class="tf on">Měsíční $SOL MAX</div>
-        <div class="tf on">Plán zdarma premium</div>
-        <div class="tf on">Inkubátor airdrop</div>
-        <div class="tf on">Early access</div>
-        <div class="tier-wp">Přesné multiplikátory<br>→ whitepaper 15.05.2026</div>
-      </div>
-    </div>
 
   </div>
 
@@ -916,103 +864,131 @@ footer.foot{
   <div class="flywheel-wrap">
 
     <!-- SVG FLYWHEEL DIAGRAM -->
+    <!--
+      Orbit: cx=140 cy=140 r=100
+      Nodes on orbit:
+        Revenue  -90°  → (140, 40)
+        Stakers   30°  → (226.6, 190)
+        Burn     150°  → (53.4, 190)
+      Arc endpoints: 13° gap from each node edge
+        Arrow 1 (green)  -77° → 17°   : (162.5,42.6) → (235.6,169.2)
+        Arrow 2 (blue)    43° → 137°  : (213.1,208.2) → (66.9,208.2)
+        Arrow 3 (red)    163° → 257°  : (44.4,169.2) → (117.5,42.6)
+    -->
     <svg viewBox="0 0 280 280" width="280" height="280">
       <defs>
-        <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-          <path d="M0,0 L0,6 L8,3 z" fill="#555DFF"/>
+        <!-- Arrowheads — smaller, midpoint placement -->
+        <marker id="ah-g" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
+          <path d="M0,0 L0,5 L6,2.5 z" fill="#38E0A1"/>
         </marker>
-        <marker id="arr-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-          <path d="M0,0 L0,6 L8,3 z" fill="#38E0A1"/>
+        <marker id="ah-b" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
+          <path d="M0,0 L0,5 L6,2.5 z" fill="#555DFF"/>
         </marker>
-        <marker id="arr-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-          <path d="M0,0 L0,6 L8,3 z" fill="#FF5558"/>
+        <marker id="ah-r" markerWidth="6" markerHeight="5" refX="6" refY="2.5" orient="auto">
+          <path d="M0,0 L0,5 L6,2.5 z" fill="#FF5558"/>
         </marker>
-        <radialGradient id="glow-blue" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="rgba(85,93,255,0.3)"/>
-          <stop offset="100%" stop-color="transparent"/>
-        </radialGradient>
-        <radialGradient id="glow-green" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="rgba(56,224,161,0.3)"/>
-          <stop offset="100%" stop-color="transparent"/>
-        </radialGradient>
-        <radialGradient id="glow-red" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="rgba(255,85,88,0.3)"/>
-          <stop offset="100%" stop-color="transparent"/>
-        </radialGradient>
+        <!-- Gradients: dim start → bright midpoint -->
+        <linearGradient id="lg-g1" x1="162" y1="43" x2="227" y2="90" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#38E0A1" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#38E0A1" stop-opacity="1"/>
+        </linearGradient>
+        <linearGradient id="lg-g2" x1="227" y1="90" x2="236" y2="169" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#38E0A1" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#38E0A1" stop-opacity="0.35"/>
+        </linearGradient>
+        <linearGradient id="lg-b1" x1="213" y1="208" x2="140" y2="240" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#555DFF" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#555DFF" stop-opacity="1"/>
+        </linearGradient>
+        <linearGradient id="lg-b2" x1="140" y1="240" x2="67" y2="208" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#555DFF" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#555DFF" stop-opacity="0.35"/>
+        </linearGradient>
+        <linearGradient id="lg-r1" x1="44" y1="169" x2="53" y2="90" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FF5558" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#FF5558" stop-opacity="1"/>
+        </linearGradient>
+        <linearGradient id="lg-r2" x1="53" y1="90" x2="118" y2="43" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FF5558" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#FF5558" stop-opacity="0.35"/>
+        </linearGradient>
       </defs>
 
-      <!-- Outer orbit ring -->
-      <circle cx="140" cy="140" r="100" fill="none" stroke="rgba(85,93,255,0.08)" stroke-width="1" stroke-dasharray="4 6"/>
+      <!-- Orbit ring -->
+      <circle cx="140" cy="140" r="100" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1" stroke-dasharray="3 6"/>
 
-      <!-- Curved arrows on the orbit (arcs between nodes) -->
-      <!-- Arrow: Profits → Stakers (top to bottom-right, clockwise) -->
-      <path d="M 171 63 A 100 100 0 0 1 224 190"
-        fill="none" stroke="#38E0A1" stroke-width="1.5"
-        stroke-dasharray="5 3"
-        marker-end="url(#arr-green)"/>
-      <!-- Arrow: Stakers → Burn (bottom-right to bottom-left) -->
-      <path d="M 210 198 A 100 100 0 0 1 70 198"
-        fill="none" stroke="#555DFF" stroke-width="1.5"
-        stroke-dasharray="5 3"
-        marker-end="url(#arr-blue)"/>
-      <!-- Arrow: Burn → Profits (bottom-left back to top) -->
-      <path d="M 57 190 A 100 100 0 0 1 109 63"
-        fill="none" stroke="#FF5558" stroke-width="1.5"
-        stroke-dasharray="5 3"
-        marker-end="url(#arr-red)"/>
+      <!-- Arc 1 first half: Revenue → midpoint (227,90) — with arrowhead at midpoint -->
+      <path d="M 162.5,42.6 A 100 100 0 0 1 226.6,90"
+        fill="none" stroke="url(#lg-g1)" stroke-width="2.5" stroke-linecap="round"
+        marker-end="url(#ah-g)"/>
+      <!-- Arc 1 second half: midpoint → Stakers — no arrowhead -->
+      <path d="M 226.6,90 A 100 100 0 0 1 235.6,169.2"
+        fill="none" stroke="url(#lg-g2)" stroke-width="2.5" stroke-linecap="round"/>
 
-      <!-- NODE: Profits (top, ~12 o'clock) -->
-      <!-- center: (140, 40) -->
-      <circle cx="140" cy="40" r="22" fill="url(#glow-blue)"/>
-      <circle cx="140" cy="40" r="16" fill="#030F2A" stroke="#555DFF" stroke-width="1"/>
-      <text x="140" y="36" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
-        font-size="7" font-weight="700" fill="#EAF0FF" text-transform="uppercase">SOLIUS</text>
-      <text x="140" y="46" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
-        font-size="7" font-weight="700" fill="#555DFF" text-transform="uppercase">REVENUE</text>
+      <!-- Arc 2 first half: Stakers → midpoint (140,240) -->
+      <path d="M 213.1,208.2 A 100 100 0 0 1 140,240"
+        fill="none" stroke="url(#lg-b1)" stroke-width="2.5" stroke-linecap="round"
+        marker-end="url(#ah-b)"/>
+      <!-- Arc 2 second half: midpoint → Burn -->
+      <path d="M 140,240 A 100 100 0 0 1 66.9,208.2"
+        fill="none" stroke="url(#lg-b2)" stroke-width="2.5" stroke-linecap="round"/>
 
-      <!-- Label between Profits and Stakers -->
-      <text x="198" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace"
-        font-size="8" fill="#38E0A1">25%</text>
-      <text x="198" y="128" text-anchor="middle" font-family="JetBrains Mono,monospace"
-        font-size="6" fill="#8A93B8">stakers</text>
+      <!-- Arc 3 first half: Burn → midpoint (53.4,90) -->
+      <path d="M 44.4,169.2 A 100 100 0 0 1 53.4,90"
+        fill="none" stroke="url(#lg-r1)" stroke-width="2.5" stroke-linecap="round"
+        marker-end="url(#ah-r)"/>
+      <!-- Arc 3 second half: midpoint → Revenue -->
+      <path d="M 53.4,90 A 100 100 0 0 1 117.5,42.6"
+        fill="none" stroke="url(#lg-r2)" stroke-width="2.5" stroke-linecap="round"/>
 
-      <!-- Label between Stakers and Burn -->
-      <text x="140" y="218" text-anchor="middle" font-family="JetBrains Mono,monospace"
-        font-size="7" fill="#555DFF">→ liquidity</text>
+      <!-- Labels: right side 25% — outward from midpoint (226.6,90) at angle -30° -->
+      <text x="253" y="72" text-anchor="middle" font-family="JetBrains Mono,monospace"
+        font-size="11" font-weight="500" fill="#38E0A1">25%</text>
+      <text x="253" y="84" text-anchor="middle" font-family="JetBrains Mono,monospace"
+        font-size="7" fill="#8A93B8" letter-spacing="0.1em">STAKERS</text>
+      <!-- Labels: left side 75% — outward from midpoint (53.4,90) at angle 210° -->
+      <text x="27" y="72" text-anchor="middle" font-family="JetBrains Mono,monospace"
+        font-size="11" font-weight="500" fill="#FF5558">75%</text>
+      <text x="27" y="84" text-anchor="middle" font-family="JetBrains Mono,monospace"
+        font-size="7" fill="#8A93B8" letter-spacing="0.1em">BURN</text>
+      <!-- Labels: bottom — outward from midpoint (140,240) -->
+      <text x="140" y="266" text-anchor="middle" font-family="JetBrains Mono,monospace"
+        font-size="7" fill="#555DFF" letter-spacing="0.14em">LIQUIDITY FLOW</text>
 
-      <!-- Label between Burn and Profits -->
-      <text x="82" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace"
-        font-size="8" fill="#FF5558">75%</text>
-      <text x="82" y="128" text-anchor="middle" font-family="JetBrains Mono,monospace"
-        font-size="6" fill="#8A93B8">burn</text>
+      <!-- NODE: Revenue (140, 40) — drawn after arcs -->
+      <circle cx="140" cy="40" r="30" fill="rgba(85,93,255,0.07)"/>
+      <circle cx="140" cy="40" r="25" fill="none" stroke="rgba(85,93,255,0.22)" stroke-width="1"/>
+      <circle cx="140" cy="40" r="21" fill="#030F2A" stroke="#555DFF" stroke-width="1.5"/>
+      <text x="140" y="37" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
+        font-size="7.5" font-weight="700" fill="#EAF0FF" letter-spacing="0.06em">SOLIUS</text>
+      <text x="140" y="47" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
+        font-size="7.5" font-weight="700" fill="#555DFF" letter-spacing="0.06em">REVENUE</text>
 
-      <!-- NODE: Stakers (bottom-right, ~120° clockwise) -->
-      <!-- center: (228, 175) -->
-      <circle cx="228" cy="175" r="22" fill="url(#glow-green)"/>
-      <circle cx="228" cy="175" r="16" fill="#030F2A" stroke="#38E0A1" stroke-width="1"/>
-      <text x="228" y="171" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
-        font-size="7" font-weight="700" fill="#EAF0FF">STAKERS</text>
-      <text x="228" y="181" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
-        font-size="7" font-weight="700" fill="#38E0A1">REWARDS</text>
+      <!-- NODE: Stakers (227, 190) -->
+      <circle cx="227" cy="190" r="30" fill="rgba(56,224,161,0.07)"/>
+      <circle cx="227" cy="190" r="25" fill="none" stroke="rgba(56,224,161,0.22)" stroke-width="1"/>
+      <circle cx="227" cy="190" r="21" fill="#030F2A" stroke="#38E0A1" stroke-width="1.5"/>
+      <text x="227" y="187" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
+        font-size="7.5" font-weight="700" fill="#EAF0FF" letter-spacing="0.06em">STAKERS</text>
+      <text x="227" y="197" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
+        font-size="7.5" font-weight="700" fill="#38E0A1" letter-spacing="0.06em">REWARDS</text>
 
-      <!-- NODE: Burn (bottom-left, ~240° clockwise) -->
-      <!-- center: (52, 175) -->
-      <circle cx="52" cy="175" r="22" fill="url(#glow-red)"/>
-      <circle cx="52" cy="175" r="16" fill="#030F2A" stroke="#FF5558" stroke-width="1"/>
-      <text x="52" y="171" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
-        font-size="7" font-weight="700" fill="#EAF0FF">BUYBACK</text>
-      <text x="52" y="181" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
-        font-size="7" font-weight="700" fill="#FF5558">&amp; BURN</text>
+      <!-- NODE: Burn (53, 190) -->
+      <circle cx="53" cy="190" r="30" fill="rgba(255,85,88,0.07)"/>
+      <circle cx="53" cy="190" r="25" fill="none" stroke="rgba(255,85,88,0.22)" stroke-width="1"/>
+      <circle cx="53" cy="190" r="21" fill="#030F2A" stroke="#FF5558" stroke-width="1.5"/>
+      <text x="53" y="187" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
+        font-size="7.5" font-weight="700" fill="#EAF0FF" letter-spacing="0.06em">BUYBACK</text>
+      <text x="53" y="197" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
+        font-size="7.5" font-weight="700" fill="#FF5558" letter-spacing="0.06em">&amp; BURN</text>
 
-      <!-- Center label -->
-      <text x="140" y="136" text-anchor="middle" font-family="JetBrains Mono,monospace"
-        font-size="7" fill="#4C5680">FLYWHEEL</text>
-      <text x="140" y="148" text-anchor="middle" font-family="JetBrains Mono,monospace"
-        font-size="7" fill="#4C5680">MODEL</text>
-
-      <!-- Value up arrow -->
-      <text x="140" y="162" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
-        font-size="9" fill="#38E0A1" font-weight="600">Supply ↓ · Value ↑</text>
+      <!-- Center -->
+      <text x="140" y="132" text-anchor="middle" font-family="JetBrains Mono,monospace"
+        font-size="6" fill="#4C5680" letter-spacing="0.26em">FLYWHEEL</text>
+      <text x="140" y="149" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
+        font-size="12" font-weight="700" fill="#38E0A1" letter-spacing="0.04em">Supply ↓</text>
+      <text x="140" y="165" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
+        font-size="12" font-weight="700" fill="#38E0A1" letter-spacing="0.04em">Value ↑</text>
     </svg>
 
     <!-- RIGHT SIDE: DETAIL -->
@@ -1022,7 +998,7 @@ footer.foot{
         <div class="fw-pct">25%</div>
         <div class="fw-info">
           <div class="fw-title">Distribuce stakers</div>
-          <div class="fw-desc">Čtvrtina zisku platformy jde přímou cestou k držitelům stakovaných tokenů — měsíční dividendy v $SOL i USDC. Čím déle stakeujete, tím vyšší podíl dostáváte.</div>
+          <div class="fw-desc">Čtvrtina zisku platformy jde přímou cestou k držitelům stakovaných tokenů — měsíční dividendy v $SOLIUS i USDC. Čím déle stakeujete, tím vyšší podíl dostáváte.</div>
         </div>
       </div>
 
@@ -1043,7 +1019,7 @@ footer.foot{
         <div class="fb-flow">
           Platforma roste <span>→</span> generuje příjmy<br>
           Příjmy <span>→</span> 25% stakers + 75% burn<br>
-          Burn snižuje supply <span>→</span> cena $SOL roste<br>
+          Burn snižuje supply <span>→</span> cena $SOLIUS roste<br>
           Vyšší cena <span>→</span> více uživatelů &amp; liquidity<br>
           Více uživatelů <span>→</span> vyšší příjmy platformy
         </div>
