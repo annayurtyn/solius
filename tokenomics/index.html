@@ -1,0 +1,1073 @@
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:          #00091E;
+  --bg-2:        #030F2A;
+  --bg-3:        #081636;
+  --ink:         #EAF0FF;
+  --ink-dim:     #8A93B8;
+  --ink-mute:    #4C5680;
+  --blue:        #555DFF;
+  --blue-soft:   rgba(85,93,255,0.14);
+  --blue-edge:   rgba(85,93,255,0.35);
+  --red:         #FF5558;
+  --red-soft:    rgba(255,85,88,0.14);
+  --red-edge:    rgba(255,85,88,0.35);
+  --green:       #38E0A1;
+  --green-soft:  rgba(56,224,161,0.14);
+  --green-edge:  rgba(56,224,161,0.4);
+  --line:        rgba(255,255,255,0.08);
+  --line-2:      rgba(255,255,255,0.04);
+}
+
+html,body{margin:0;padding:0;background:#05070F;}
+body{
+  font-family:'Barlow',system-ui,sans-serif;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+.stage{
+  min-height:100vh;
+  padding:32px 16px 64px;
+  display:flex;
+  justify-content:center;
+}
+.page{
+  width:820px;
+  background:var(--bg);
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.04);
+}
+.page::before{
+  content:"";
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(85,93,255,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(85,93,255,0.04) 1px,transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;
+  mask-image:radial-gradient(ellipse at 70% 0%,black 0%,transparent 70%);
+}
+.page::after{
+  content:"";
+  position:absolute;
+  top:-200px;right:-180px;
+  width:520px;height:520px;
+  background:radial-gradient(circle,rgba(85,93,255,0.22),transparent 60%);
+  pointer-events:none;
+}
+.page>*{position:relative;z-index:1;}
+
+/* CORNERS */
+.corners span{
+  position:absolute;
+  width:14px;height:14px;
+  border:1px solid var(--blue-edge);
+  z-index:2;
+}
+.corners .tl{top:14px;left:14px;border-right:none;border-bottom:none;}
+.corners .tr{top:14px;right:14px;border-left:none;border-bottom:none;}
+.corners .bl{bottom:14px;left:14px;border-right:none;border-top:none;}
+.corners .br{bottom:14px;right:14px;border-left:none;border-top:none;}
+.doc-num{
+  position:absolute;top:20px;left:50%;
+  transform:translateX(-50%);
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;letter-spacing:0.3em;
+  color:var(--ink-mute);text-transform:uppercase;
+  z-index:2;
+}
+
+/* HEADER */
+header.hero{
+  padding:36px 48px 28px;
+  border-bottom:1px solid var(--line);
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:end;
+  gap:24px;
+}
+.brand{display:flex;align-items:center;gap:14px;font-family:'Barlow Condensed',sans-serif;}
+.brand .mark{
+  width:36px;height:36px;
+  background:var(--blue);
+  display:grid;place-items:center;
+  clip-path:polygon(15% 0,100% 0,85% 100%,0 100%);
+}
+.brand .mark::before{content:"";width:10px;height:10px;background:var(--bg);}
+.brand .name{font-weight:800;letter-spacing:0.18em;font-size:22px;text-transform:uppercase;}
+.kicker{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:0.24em;
+  color:var(--ink-dim);text-transform:uppercase;
+  margin:0 0 10px;
+  display:flex;align-items:center;gap:10px;
+}
+.kicker::after{content:"";flex:1;height:1px;background:var(--line);}
+h1.title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800;font-size:72px;
+  line-height:0.88;letter-spacing:-0.01em;
+  margin:6px 0 0;text-transform:uppercase;
+}
+h1.title .accent{color:var(--blue);}
+.hero-meta{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:0.18em;
+  color:var(--ink-dim);text-transform:uppercase;
+  text-align:right;line-height:1.7;padding-bottom:4px;
+}
+.hero-meta b{color:var(--ink);font-weight:500;}
+
+/* STRIP */
+.strip{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-bottom:1px solid var(--line);
+}
+.strip .cell{
+  padding:14px 20px;
+  border-right:1px solid var(--line);
+  display:flex;flex-direction:column;gap:4px;
+}
+.strip .cell:last-child{border-right:none;}
+.strip .cell .k{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;letter-spacing:0.22em;
+  color:var(--ink-mute);text-transform:uppercase;
+}
+.strip .cell .v{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:18px;font-weight:600;letter-spacing:0.02em;
+}
+.v-red{color:var(--red);}
+.v-green{color:var(--green);}
+
+/* SECTION HEADER */
+.sec-head{
+  padding:32px 48px 16px;
+  display:flex;align-items:center;gap:16px;
+}
+.sec-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;color:var(--ink-mute);
+  letter-spacing:0.3em;padding:4px 8px;
+  border:1px solid var(--line);white-space:nowrap;
+}
+.sec-head h2{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:28px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.02em;
+  margin:0;
+}
+.sec-line{flex:1;height:1px;background:var(--line);}
+
+/* DISTRIBUTION */
+.dist-wrap{
+  padding:0 48px 40px;
+  display:grid;
+  grid-template-columns:260px 1fr;
+  gap:40px;
+  align-items:center;
+}
+.donut-outer{
+  position:relative;
+  display:flex;justify-content:center;align-items:center;
+}
+.donut-center{
+  position:absolute;
+  text-align:center;pointer-events:none;
+}
+.donut-center .dc-val{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:22px;font-weight:800;color:var(--ink);line-height:1;
+}
+.donut-center .dc-sub{
+  font-family:'JetBrains Mono',monospace;
+  font-size:7px;letter-spacing:0.2em;
+  color:var(--ink-mute);text-transform:uppercase;margin-top:4px;
+}
+.dist-legend{display:flex;flex-direction:column;gap:0;}
+.dist-row{
+  display:grid;
+  grid-template-columns:10px 1fr 50px 28px;
+  align-items:center;gap:10px;
+  padding:9px 0;
+  border-bottom:1px solid var(--line-2);
+}
+.dist-row:last-child{border-bottom:none;}
+.dist-row .dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.dist-row .lname{font-size:12px;font-weight:500;color:var(--ink);}
+.dist-row .lpct{
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;font-weight:500;text-align:right;
+}
+.dist-row .lbar{height:3px;background:var(--line);border-radius:2px;overflow:hidden;}
+.dist-row .lbar-fill{height:100%;border-radius:2px;}
+
+/* divider */
+.divider{height:1px;background:var(--line);margin:0 48px;}
+
+/* VESTING */
+.vesting-wrap{padding:0 48px 40px;}
+.vchart{
+  display:flex;
+  align-items:flex-end;
+  gap:5px;
+  height:120px;
+  padding-bottom:30px;
+  position:relative;
+  border-bottom:1px solid var(--line);
+  border-left:1px solid var(--line);
+  margin-bottom:8px;
+}
+.vchart::before{
+  content:"";position:absolute;inset:0;
+  background-image:linear-gradient(var(--line-2) 1px,transparent 1px);
+  background-size:100% 25%;
+  pointer-events:none;
+}
+.vbar-wrap{
+  flex:1;
+  display:flex;flex-direction:column;align-items:center;
+  height:100%;justify-content:flex-end;
+  position:relative;
+}
+.vbar{
+  width:100%;
+  border-radius:2px 2px 0 0;
+  min-height:4px;
+  background:var(--blue-soft);
+  border:1px solid var(--blue-edge);
+  border-bottom:none;
+  transition:background 0.2s;
+}
+.vbar:hover{background:var(--blue);}
+.vbar.vhigh{background:var(--blue);border-color:var(--blue);box-shadow:0 0 12px rgba(85,93,255,0.35);}
+.vpct{
+  position:absolute;top:-18px;left:50%;transform:translateX(-50%);
+  font-family:'JetBrains Mono',monospace;font-size:7px;
+  color:var(--ink-dim);letter-spacing:0.05em;white-space:nowrap;
+}
+.vmonth{
+  position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);
+  font-family:'JetBrains Mono',monospace;font-size:7px;
+  color:var(--ink-mute);white-space:nowrap;
+}
+.vesting-cumul{
+  margin-top:32px;
+  display:grid;grid-template-columns:repeat(6,1fr);
+  border:1px solid var(--line);
+}
+.vc-cell{
+  padding:10px 12px;
+  border-right:1px solid var(--line);
+}
+.vc-cell:last-child{border-right:none;}
+.vc-cell .vc-m{
+  font-family:'JetBrains Mono',monospace;font-size:8px;
+  color:var(--ink-mute);letter-spacing:0.2em;text-transform:uppercase;
+  margin-bottom:4px;
+}
+.vc-cell .vc-v{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:20px;font-weight:700;
+}
+.vc-cell .vc-c{
+  font-family:'JetBrains Mono',monospace;font-size:8px;
+  color:var(--ink-mute);
+}
+
+/* TEAM VESTING */
+.team-wrap{
+  padding:0 48px 40px;
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+}
+.tcard{
+  background:var(--bg-2);
+  border:1px solid var(--line);
+  padding:20px 24px;
+  position:relative;overflow:hidden;
+}
+.tcard::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+}
+.tcard.tb::before{background:var(--blue);}
+.tcard.tr::before{background:var(--red);}
+.tcard .tn{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:52px;font-weight:800;line-height:1;margin-bottom:2px;
+}
+.tcard.tb .tn{color:var(--blue);}
+.tcard.tr .tn{color:var(--red);}
+.tcard .tl{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:13px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.05em;
+  color:var(--ink);margin-bottom:14px;
+}
+.tcard .ti{
+  display:flex;align-items:flex-start;gap:8px;
+  font-size:12px;color:var(--ink-dim);line-height:1.5;
+  margin-bottom:7px;
+}
+.tcard .ti::before{
+  content:"→";font-family:'JetBrains Mono',monospace;font-size:9px;
+  flex-shrink:0;margin-top:2px;
+}
+.tcard.tb .ti::before{color:var(--blue);}
+.tcard.tr .ti::before{color:var(--red);}
+.tcard .ti b{color:var(--ink);font-weight:600;}
+.tmilestone{
+  margin-top:12px;padding:8px 12px;
+  background:rgba(255,85,88,0.08);
+  border:1px solid var(--red-edge);
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;letter-spacing:0.12em;
+  color:var(--red);text-transform:uppercase;
+  line-height:1.6;
+}
+
+/* STAKING */
+.staking-wrap{padding:0 48px 40px;}
+.benefits-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+  margin-bottom:20px;
+}
+.bc{
+  background:var(--bg-2);border:1px solid var(--line);
+  padding:14px 16px;
+  transition:border-color 0.2s,background 0.2s;
+}
+.bc:hover{border-color:var(--blue-edge);background:var(--blue-soft);}
+.bc .bc-icon{font-size:18px;margin-bottom:7px;line-height:1;}
+.bc .bc-title{
+  font-family:'Barlow Condensed',sans-serif;font-size:13px;
+  font-weight:700;text-transform:uppercase;letter-spacing:0.04em;
+  color:var(--ink);margin-bottom:3px;
+}
+.bc .bc-desc{font-size:11px;color:var(--ink-dim);line-height:1.4;}
+
+.tiers{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--line);
+}
+.tier{
+  padding:16px 14px;border-right:1px solid var(--line);
+  position:relative;
+}
+.tier:last-child{border-right:none;}
+.tier::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;}
+.tier.t1::before{background:linear-gradient(90deg,#CD7F32,#8B4513);}
+.tier.t2::before{background:linear-gradient(90deg,#A8A9AD,#6E6E6E);}
+.tier.t3::before{background:linear-gradient(90deg,#FFD700,#FFA500);}
+.tier.t4::before{background:linear-gradient(90deg,#E5E4E2,#7EB8E8);}
+.tier .tier-name{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:13px;font-weight:800;
+  text-transform:uppercase;letter-spacing:0.1em;margin-bottom:2px;
+}
+.tier.t1 .tier-name{color:#CD7F32;}
+.tier.t2 .tier-name{color:#A8A9AD;}
+.tier.t3 .tier-name{color:#FFD700;}
+.tier.t4 .tier-name{color:#E8E8E8;}
+.tier .tier-dur{
+  font-family:'JetBrains Mono',monospace;font-size:8px;
+  letter-spacing:0.2em;color:var(--ink-mute);
+  text-transform:uppercase;margin-bottom:12px;
+}
+.tier .tf{
+  font-size:10px;color:var(--ink-dim);
+  display:flex;align-items:flex-start;gap:5px;
+  margin-bottom:5px;line-height:1.3;
+}
+.tier .tf::before{content:"·";color:var(--ink-mute);flex-shrink:0;}
+.tier .tf.on{color:var(--ink);}
+.tier.t3 .tf.on::before,.tier.t4 .tf.on::before{content:"✓";font-size:8px;color:var(--green);}
+.tier .tier-wp{
+  margin-top:10px;font-family:'JetBrains Mono',monospace;
+  font-size:7px;letter-spacing:0.12em;
+  color:var(--ink-mute);text-transform:uppercase;line-height:1.5;
+}
+
+/* FLYWHEEL */
+.flywheel-wrap{
+  padding:0 48px 40px;
+  display:grid;grid-template-columns:280px 1fr;gap:40px;align-items:center;
+}
+.fw-right{display:flex;flex-direction:column;gap:20px;}
+.fw-item{display:flex;gap:16px;align-items:flex-start;}
+.fw-pct{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:42px;font-weight:800;line-height:1;
+  flex-shrink:0;width:72px;
+}
+.fw-item.fg .fw-pct{color:var(--green);}
+.fw-item.fb .fw-pct{color:var(--blue);}
+.fw-info .fw-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:16px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.03em;
+  color:var(--ink);margin-bottom:4px;
+}
+.fw-info .fw-desc{font-size:12px;color:var(--ink-dim);line-height:1.5;}
+.fw-divider{height:1px;background:var(--line);}
+.fw-box{
+  padding:14px 18px;background:var(--bg-2);border:1px solid var(--line);
+}
+.fw-box .fb-label{
+  font-family:'JetBrains Mono',monospace;font-size:8px;
+  letter-spacing:0.2em;color:var(--ink-mute);text-transform:uppercase;
+  margin-bottom:6px;
+}
+.fw-box .fb-flow{
+  font-size:12px;color:var(--ink);font-weight:500;line-height:1.6;
+}
+.fw-box .fb-flow span{color:var(--blue);}
+
+/* FOOTER */
+footer.foot{
+  border-top:1px solid var(--line);
+  display:grid;grid-template-columns:1fr auto;
+  gap:24px;padding:22px 48px 28px;align-items:center;
+}
+.foot-note{font-size:12px;color:var(--ink-dim);line-height:1.5;max-width:520px;}
+.foot-note .hl{color:var(--ink);font-weight:600;border-bottom:1px solid var(--blue);padding-bottom:1px;}
+.foot-mark{text-align:right;}
+.foot-mark .wp{
+  font-family:'Barlow Condensed',sans-serif;font-size:22px;
+  font-weight:800;letter-spacing:0.04em;text-transform:uppercase;
+  color:var(--ink);line-height:1.1;
+}
+.foot-mark .wp span{color:var(--red);}
+.foot-mark .wp-date{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:0.2em;color:var(--ink-dim);text-transform:uppercase;
+  margin-top:10px;
+}
+
+/* CONTROLS */
+.controls{
+  position:fixed;bottom:18px;right:18px;
+  display:flex;gap:8px;z-index:50;
+}
+.controls button{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:0.2em;text-transform:uppercase;
+  background:#0C1836;color:#EAF0FF;
+  border:1px solid rgba(85,93,255,0.4);
+  padding:10px 14px;cursor:pointer;
+}
+.controls button:hover{background:#152451;}
+
+@page{size:A4 portrait;margin:0;}
+@media print{
+  html,body{background:var(--bg);}
+  .stage{padding:0;min-height:auto;}
+  .page{width:210mm;box-shadow:none;}
+  .controls{display:none!important;}
+}
+</style>
+
+<div class="stage">
+<div class="page" id="page">
+
+  <div class="corners">
+    <span class="tl"></span><span class="tr"></span>
+    <span class="bl"></span><span class="br"></span>
+  </div>
+  <div class="doc-num">SOL / DOC-004 · TOKENOMIKA</div>
+
+  <!-- HEADER -->
+  <header class="hero">
+    <div>
+      <div class="brand">
+        <div class="mark"></div>
+        <div class="name">SOLIUS</div>
+      </div>
+      <p class="kicker">Token Economics · Q4 2026 Launch</p>
+      <h1 class="title">Token<br><span class="accent">omika.</span></h1>
+    </div>
+    <div class="hero-meta">
+      <div>Network · <b>Solana</b></div>
+      <div>Ticker · <b>$SOL</b></div>
+      <div>Vesting · <b>12 měsíců</b></div>
+      <div>Whitepaper · <b>15.05.2026</b></div>
+      <div>Rev. · <b>v1.0</b></div>
+    </div>
+  </header>
+
+  <!-- STRIP -->
+  <div class="strip">
+    <div class="cell">
+      <div class="k">Token Launch</div>
+      <div class="v v-red">Q4 2026</div>
+    </div>
+    <div class="cell">
+      <div class="k">Staking horizont</div>
+      <div class="v">1 – 5 let</div>
+    </div>
+    <div class="cell">
+      <div class="k">Team lock-up</div>
+      <div class="v">Min. 24 měsíců</div>
+    </div>
+    <div class="cell">
+      <div class="k">Min. valuace (team unlock)</div>
+      <div class="v v-green">$300 M</div>
+    </div>
+  </div>
+
+  <!-- ── SEKCE 1: DISTRIBUCE ── -->
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <h2>Distribuce tokenů</h2>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="dist-wrap">
+
+    <!-- DONUT SVG -->
+    <div class="donut-outer">
+      <div class="donut-center">
+        <div class="dc-val">100%</div>
+        <div class="dc-sub">Celková<br>alokace</div>
+      </div>
+      <!-- r=40, C≈251.33, cx=50, cy=50, viewBox 0 0 100 100
+           každý segment: stroke-dasharray="seg_px rest_px", transform rotate(start_deg-90, 50,50)
+           Gaps: dasharray zmenšen o 1.5px
+           Segments (pct, start_pct, color):
+             Angel      5%   0%   #A78BFA
+             Private    5%   5%   #60A5FA
+             Public     5%  10%   #34D399
+             ICO       19%  15%   #555DFF
+             Strategic  8%  34%   #FBBF24
+             Team      35%  42%   #FF5558
+             Airdrop   11%  77%   #F472B6
+             Staking   12%  88%   #38E0A1
+           C=251.33, 1%=2.5133px
+           Angel    5%=12.57 → 11.07, rotate -90
+           Private  5%=12.57 → 11.07, rotate -72
+           Public   5%=12.57 → 11.07, rotate -54
+           ICO     19%=47.75 → 46.25, rotate -36
+           Strategic8%=20.11 → 18.61, rotate  32.4
+           Team    35%=87.97 → 86.47, rotate  61.2
+           Airdrop 11%=27.65 → 26.15, rotate 187.2
+           Staking 12%=30.16 → 28.66, rotate 226.8
+      -->
+      <svg viewBox="0 0 100 100" width="240" height="240">
+        <!-- Track -->
+        <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="18"/>
+        <!-- Angel 5% #A78BFA -->
+        <circle cx="50" cy="50" r="40" fill="none" stroke="#A78BFA" stroke-width="18"
+          stroke-dasharray="11.07 240.26"
+          transform="rotate(-90,50,50)"/>
+        <!-- Private 5% #60A5FA -->
+        <circle cx="50" cy="50" r="40" fill="none" stroke="#60A5FA" stroke-width="18"
+          stroke-dasharray="11.07 240.26"
+          transform="rotate(-72,50,50)"/>
+        <!-- Public 5% #34D399 -->
+        <circle cx="50" cy="50" r="40" fill="none" stroke="#34D399" stroke-width="18"
+          stroke-dasharray="11.07 240.26"
+          transform="rotate(-54,50,50)"/>
+        <!-- ICO 19% #555DFF -->
+        <circle cx="50" cy="50" r="40" fill="none" stroke="#555DFF" stroke-width="18"
+          stroke-dasharray="46.25 205.08"
+          transform="rotate(-36,50,50)"/>
+        <!-- Strategic 8% #FBBF24 -->
+        <circle cx="50" cy="50" r="40" fill="none" stroke="#FBBF24" stroke-width="18"
+          stroke-dasharray="18.61 232.72"
+          transform="rotate(32.4,50,50)"/>
+        <!-- Team 35% #FF5558 -->
+        <circle cx="50" cy="50" r="40" fill="none" stroke="#FF5558" stroke-width="18"
+          stroke-dasharray="86.47 164.86"
+          transform="rotate(61.2,50,50)"/>
+        <!-- Airdrop 11% #F472B6 -->
+        <circle cx="50" cy="50" r="40" fill="none" stroke="#F472B6" stroke-width="18"
+          stroke-dasharray="26.15 225.18"
+          transform="rotate(187.2,50,50)"/>
+        <!-- Staking 12% #38E0A1 -->
+        <circle cx="50" cy="50" r="40" fill="none" stroke="#38E0A1" stroke-width="18"
+          stroke-dasharray="28.66 222.67"
+          transform="rotate(226.8,50,50)"/>
+        <!-- Inner circle mask -->
+        <circle cx="50" cy="50" r="30" fill="#00091E"/>
+      </svg>
+    </div>
+
+    <!-- LEGENDA -->
+    <div class="dist-legend">
+      <div class="dist-row">
+        <div class="dot" style="background:#FF5558;"></div>
+        <div class="lname">Alokace pro tým</div>
+        <div class="lpct" style="color:#FF5558;">35%</div>
+        <div class="lbar"><div class="lbar-fill" style="width:100%;background:#FF5558;"></div></div>
+      </div>
+      <div class="dist-row">
+        <div class="dot" style="background:#555DFF;"></div>
+        <div class="lname">ICO</div>
+        <div class="lpct" style="color:#555DFF;">19%</div>
+        <div class="lbar"><div class="lbar-fill" style="width:54%;background:#555DFF;"></div></div>
+      </div>
+      <div class="dist-row">
+        <div class="dot" style="background:#38E0A1;"></div>
+        <div class="lname">Odměny za staking</div>
+        <div class="lpct" style="color:#38E0A1;">12%</div>
+        <div class="lbar"><div class="lbar-fill" style="width:34%;background:#38E0A1;"></div></div>
+      </div>
+      <div class="dist-row">
+        <div class="dot" style="background:#F472B6;"></div>
+        <div class="lname">Airdrop &amp; odměny za mise</div>
+        <div class="lpct" style="color:#F472B6;">11%</div>
+        <div class="lbar"><div class="lbar-fill" style="width:31%;background:#F472B6;"></div></div>
+      </div>
+      <div class="dist-row">
+        <div class="dot" style="background:#FBBF24;"></div>
+        <div class="lname">Strategická rezerva</div>
+        <div class="lpct" style="color:#FBBF24;">8%</div>
+        <div class="lbar"><div class="lbar-fill" style="width:23%;background:#FBBF24;"></div></div>
+      </div>
+      <div class="dist-row">
+        <div class="dot" style="background:#A78BFA;"></div>
+        <div class="lname">Angel kola (A, B)</div>
+        <div class="lpct" style="color:#A78BFA;">5%</div>
+        <div class="lbar"><div class="lbar-fill" style="width:14%;background:#A78BFA;"></div></div>
+      </div>
+      <div class="dist-row">
+        <div class="dot" style="background:#60A5FA;"></div>
+        <div class="lname">Privátní kola (A, B)</div>
+        <div class="lpct" style="color:#60A5FA;">5%</div>
+        <div class="lbar"><div class="lbar-fill" style="width:14%;background:#60A5FA;"></div></div>
+      </div>
+      <div class="dist-row">
+        <div class="dot" style="background:#34D399;"></div>
+        <div class="lname">Veřejná kola (A, B)</div>
+        <div class="lpct" style="color:#34D399;">5%</div>
+        <div class="lbar"><div class="lbar-fill" style="width:14%;background:#34D399;"></div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── SEKCE 2: VESTING ── -->
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <h2>Harmonogram vestingu</h2>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="vesting-wrap">
+
+    <!-- BAR CHART
+         max 12.5% = 90px; 7.5% = 90*(7.5/12.5) = 54px
+         Months 1 & 7 = highlighted (12.5%), rest 7.5%
+    -->
+    <div class="vchart">
+
+      <div class="vbar-wrap">
+        <div class="vpct">12.5%</div>
+        <div class="vbar vhigh" style="height:90px;"></div>
+        <div class="vmonth">M1</div>
+      </div>
+      <div class="vbar-wrap">
+        <div class="vpct">7.5%</div>
+        <div class="vbar" style="height:54px;"></div>
+        <div class="vmonth">M2</div>
+      </div>
+      <div class="vbar-wrap">
+        <div class="vpct">7.5%</div>
+        <div class="vbar" style="height:54px;"></div>
+        <div class="vmonth">M3</div>
+      </div>
+      <div class="vbar-wrap">
+        <div class="vpct">7.5%</div>
+        <div class="vbar" style="height:54px;"></div>
+        <div class="vmonth">M4</div>
+      </div>
+      <div class="vbar-wrap">
+        <div class="vpct">7.5%</div>
+        <div class="vbar" style="height:54px;"></div>
+        <div class="vmonth">M5</div>
+      </div>
+      <div class="vbar-wrap">
+        <div class="vpct">7.5%</div>
+        <div class="vbar" style="height:54px;"></div>
+        <div class="vmonth">M6</div>
+      </div>
+      <div class="vbar-wrap">
+        <div class="vpct">12.5%</div>
+        <div class="vbar vhigh" style="height:90px;"></div>
+        <div class="vmonth">M7</div>
+      </div>
+      <div class="vbar-wrap">
+        <div class="vpct">7.5%</div>
+        <div class="vbar" style="height:54px;"></div>
+        <div class="vmonth">M8</div>
+      </div>
+      <div class="vbar-wrap">
+        <div class="vpct">7.5%</div>
+        <div class="vbar" style="height:54px;"></div>
+        <div class="vmonth">M9</div>
+      </div>
+      <div class="vbar-wrap">
+        <div class="vpct">7.5%</div>
+        <div class="vbar" style="height:54px;"></div>
+        <div class="vmonth">M10</div>
+      </div>
+      <div class="vbar-wrap">
+        <div class="vpct">7.5%</div>
+        <div class="vbar" style="height:54px;"></div>
+        <div class="vmonth">M11</div>
+      </div>
+      <div class="vbar-wrap">
+        <div class="vpct">7.5%</div>
+        <div class="vbar" style="height:54px;"></div>
+        <div class="vmonth">M12</div>
+      </div>
+    </div>
+
+    <!-- CUMULATIVE TABLE -->
+    <div class="vesting-cumul">
+      <div class="vc-cell">
+        <div class="vc-m">Po M1</div>
+        <div class="vc-v" style="color:var(--blue);">12.5%</div>
+        <div class="vc-c">odemčeno</div>
+      </div>
+      <div class="vc-cell">
+        <div class="vc-m">Po M3</div>
+        <div class="vc-v" style="color:var(--blue);">27.5%</div>
+        <div class="vc-c">odemčeno</div>
+      </div>
+      <div class="vc-cell">
+        <div class="vc-m">Po M6</div>
+        <div class="vc-v" style="color:var(--blue);">50%</div>
+        <div class="vc-c">odemčeno</div>
+      </div>
+      <div class="vc-cell">
+        <div class="vc-m">Po M7</div>
+        <div class="vc-v" style="color:var(--blue);">62.5%</div>
+        <div class="vc-c">odemčeno</div>
+      </div>
+      <div class="vc-cell">
+        <div class="vc-m">Po M9</div>
+        <div class="vc-v" style="color:var(--blue);">77.5%</div>
+        <div class="vc-c">odemčeno</div>
+      </div>
+      <div class="vc-cell">
+        <div class="vc-m">Po M12</div>
+        <div class="vc-v" style="color:var(--green);">100%</div>
+        <div class="vc-c">plně odemčeno</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── SEKCE 3: TEAM VESTING ── -->
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <h2>Týmová alokace</h2>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="team-wrap">
+
+    <div class="tcard tb">
+      <div class="tn">25%</div>
+      <div class="tl">Automatický staking</div>
+      <div class="ti">Z celkové <b>35% týmové alokace</b> jde 25 % rovnou do stakingu.</div>
+      <div class="ti">Minimální délka stakingu <b>24 měsíců</b>.</div>
+      <div class="ti">Horizont stakingu <b>2 – 10 let</b> dle rozhodnutí týmu.</div>
+      <div class="ti">Plná participace na <b>staking rewards</b> a flywheel modelu.</div>
+    </div>
+
+    <div class="tcard tr">
+      <div class="tn">10%</div>
+      <div class="tl">Odemykání dle milníků</div>
+      <div class="ti">Podmínky definovány ve <b>whitepaperu 15. 5. 2026</b>.</div>
+      <div class="ti">Tokeny se odemknou až při dosažení <b>min. valuace $300 M</b>.</div>
+      <div class="ti">Před splněním podmínek <b>žádné tokeny týmu nezíská</b>.</div>
+      <div class="tmilestone">
+        ⚑ &nbsp; Min. valuace $300 M · Whitepaper 15.05.2026
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── SEKCE 4: STAKING ── -->
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <h2>Staking benefity</h2>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="staking-wrap">
+
+    <div class="benefits-grid">
+      <div class="bc">
+        <div class="bc-icon">💰</div>
+        <div class="bc-title">Měsíční dividendy</div>
+        <div class="bc-desc">Pravidelné výplaty v tokenech i USDC každý měsíc.</div>
+      </div>
+      <div class="bc">
+        <div class="bc-icon">📈</div>
+        <div class="bc-title">Měsíční $SOL zisk</div>
+        <div class="bc-desc">Pravidelný přísun Solius tokenů za věrnost.</div>
+      </div>
+      <div class="bc">
+        <div class="bc-icon">⚡</div>
+        <div class="bc-title">Nižší poplatky</div>
+        <div class="bc-desc">Snížené poplatky za všechny mikrotransakce na platformě.</div>
+      </div>
+      <div class="bc">
+        <div class="bc-icon">🎯</div>
+        <div class="bc-title">Speciální mise</div>
+        <div class="bc-desc">Exkluzivní odměny a přístup k prémiové sadě misí.</div>
+      </div>
+      <div class="bc">
+        <div class="bc-icon">🚀</div>
+        <div class="bc-title">Plán zdarma</div>
+        <div class="bc-desc">Měsíční předplatné se slevou nebo zdarma dle tier úrovně.</div>
+      </div>
+      <div class="bc">
+        <div class="bc-icon">🪂</div>
+        <div class="bc-title">Inkubátor airdropy</div>
+        <div class="bc-desc">Tokeny a podíly startupů z Solius inkubátoru.</div>
+      </div>
+      <div class="bc">
+        <div class="bc-icon">🔮</div>
+        <div class="bc-title">Early access</div>
+        <div class="bc-desc">Přístup k novým funkcím dříve než ostatní uživatelé.</div>
+      </div>
+      <div class="bc" style="border-color:var(--blue-edge);background:var(--blue-soft);">
+        <div class="bc-icon">🏆</div>
+        <div class="bc-title">Výhody rostou</div>
+        <div class="bc-desc">Čím déle stakeujete, tím vyšší benefity a multiplikátory.</div>
+      </div>
+    </div>
+
+    <!-- TIER TABLE -->
+    <div class="tiers">
+      <div class="tier t1">
+        <div class="tier-name">Bronze</div>
+        <div class="tier-dur">1 rok</div>
+        <div class="tf on">Měsíční dividendy</div>
+        <div class="tf on">Snížené poplatky</div>
+        <div class="tf on">Měsíční $SOL</div>
+        <div class="tf">Plán zdarma</div>
+        <div class="tf">Inkubátor airdrop</div>
+        <div class="tf">Early access</div>
+      </div>
+      <div class="tier t2">
+        <div class="tier-name">Silver</div>
+        <div class="tier-dur">2 roky</div>
+        <div class="tf on">Měsíční dividendy +</div>
+        <div class="tf on">Nižší poplatky</div>
+        <div class="tf on">Měsíční $SOL</div>
+        <div class="tf on">Plán se slevou</div>
+        <div class="tf">Inkubátor airdrop</div>
+        <div class="tf">Early access</div>
+      </div>
+      <div class="tier t3">
+        <div class="tier-name">Gold</div>
+        <div class="tier-dur">3 roky</div>
+        <div class="tf on">Měsíční dividendy ++</div>
+        <div class="tf on">Min. poplatky</div>
+        <div class="tf on">Měsíční $SOL</div>
+        <div class="tf on">Plán zdarma</div>
+        <div class="tf on">Inkubátor airdrop</div>
+        <div class="tf">Early access</div>
+      </div>
+      <div class="tier t4">
+        <div class="tier-name">Platinum</div>
+        <div class="tier-dur">5 let</div>
+        <div class="tf on">Měsíční dividendy MAX</div>
+        <div class="tf on">0 poplatků</div>
+        <div class="tf on">Měsíční $SOL MAX</div>
+        <div class="tf on">Plán zdarma premium</div>
+        <div class="tf on">Inkubátor airdrop</div>
+        <div class="tf on">Early access</div>
+        <div class="tier-wp">Přesné multiplikátory<br>→ whitepaper 15.05.2026</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── SEKCE 5: FLYWHEEL ── -->
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <h2>Flywheel model</h2>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="flywheel-wrap">
+
+    <!-- SVG FLYWHEEL DIAGRAM -->
+    <svg viewBox="0 0 280 280" width="280" height="280">
+      <defs>
+        <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#555DFF"/>
+        </marker>
+        <marker id="arr-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#38E0A1"/>
+        </marker>
+        <marker id="arr-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#FF5558"/>
+        </marker>
+        <radialGradient id="glow-blue" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="rgba(85,93,255,0.3)"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+        <radialGradient id="glow-green" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="rgba(56,224,161,0.3)"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+        <radialGradient id="glow-red" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="rgba(255,85,88,0.3)"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Outer orbit ring -->
+      <circle cx="140" cy="140" r="100" fill="none" stroke="rgba(85,93,255,0.08)" stroke-width="1" stroke-dasharray="4 6"/>
+
+      <!-- Curved arrows on the orbit (arcs between nodes) -->
+      <!-- Arrow: Profits → Stakers (top to bottom-right, clockwise) -->
+      <path d="M 171 63 A 100 100 0 0 1 224 190"
+        fill="none" stroke="#38E0A1" stroke-width="1.5"
+        stroke-dasharray="5 3"
+        marker-end="url(#arr-green)"/>
+      <!-- Arrow: Stakers → Burn (bottom-right to bottom-left) -->
+      <path d="M 210 198 A 100 100 0 0 1 70 198"
+        fill="none" stroke="#555DFF" stroke-width="1.5"
+        stroke-dasharray="5 3"
+        marker-end="url(#arr-blue)"/>
+      <!-- Arrow: Burn → Profits (bottom-left back to top) -->
+      <path d="M 57 190 A 100 100 0 0 1 109 63"
+        fill="none" stroke="#FF5558" stroke-width="1.5"
+        stroke-dasharray="5 3"
+        marker-end="url(#arr-red)"/>
+
+      <!-- NODE: Profits (top, ~12 o'clock) -->
+      <!-- center: (140, 40) -->
+      <circle cx="140" cy="40" r="22" fill="url(#glow-blue)"/>
+      <circle cx="140" cy="40" r="16" fill="#030F2A" stroke="#555DFF" stroke-width="1"/>
+      <text x="140" y="36" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
+        font-size="7" font-weight="700" fill="#EAF0FF" text-transform="uppercase">SOLIUS</text>
+      <text x="140" y="46" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
+        font-size="7" font-weight="700" fill="#555DFF" text-transform="uppercase">REVENUE</text>
+
+      <!-- Label between Profits and Stakers -->
+      <text x="198" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace"
+        font-size="8" fill="#38E0A1">25%</text>
+      <text x="198" y="128" text-anchor="middle" font-family="JetBrains Mono,monospace"
+        font-size="6" fill="#8A93B8">stakers</text>
+
+      <!-- Label between Stakers and Burn -->
+      <text x="140" y="218" text-anchor="middle" font-family="JetBrains Mono,monospace"
+        font-size="7" fill="#555DFF">→ liquidity</text>
+
+      <!-- Label between Burn and Profits -->
+      <text x="82" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace"
+        font-size="8" fill="#FF5558">75%</text>
+      <text x="82" y="128" text-anchor="middle" font-family="JetBrains Mono,monospace"
+        font-size="6" fill="#8A93B8">burn</text>
+
+      <!-- NODE: Stakers (bottom-right, ~120° clockwise) -->
+      <!-- center: (228, 175) -->
+      <circle cx="228" cy="175" r="22" fill="url(#glow-green)"/>
+      <circle cx="228" cy="175" r="16" fill="#030F2A" stroke="#38E0A1" stroke-width="1"/>
+      <text x="228" y="171" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
+        font-size="7" font-weight="700" fill="#EAF0FF">STAKERS</text>
+      <text x="228" y="181" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
+        font-size="7" font-weight="700" fill="#38E0A1">REWARDS</text>
+
+      <!-- NODE: Burn (bottom-left, ~240° clockwise) -->
+      <!-- center: (52, 175) -->
+      <circle cx="52" cy="175" r="22" fill="url(#glow-red)"/>
+      <circle cx="52" cy="175" r="16" fill="#030F2A" stroke="#FF5558" stroke-width="1"/>
+      <text x="52" y="171" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
+        font-size="7" font-weight="700" fill="#EAF0FF">BUYBACK</text>
+      <text x="52" y="181" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
+        font-size="7" font-weight="700" fill="#FF5558">&amp; BURN</text>
+
+      <!-- Center label -->
+      <text x="140" y="136" text-anchor="middle" font-family="JetBrains Mono,monospace"
+        font-size="7" fill="#4C5680">FLYWHEEL</text>
+      <text x="140" y="148" text-anchor="middle" font-family="JetBrains Mono,monospace"
+        font-size="7" fill="#4C5680">MODEL</text>
+
+      <!-- Value up arrow -->
+      <text x="140" y="162" text-anchor="middle" font-family="Barlow Condensed,sans-serif"
+        font-size="9" fill="#38E0A1" font-weight="600">Supply ↓ · Value ↑</text>
+    </svg>
+
+    <!-- RIGHT SIDE: DETAIL -->
+    <div class="fw-right">
+
+      <div class="fw-item fg">
+        <div class="fw-pct">25%</div>
+        <div class="fw-info">
+          <div class="fw-title">Distribuce stakers</div>
+          <div class="fw-desc">Čtvrtina zisku platformy jde přímou cestou k držitelům stakovaných tokenů — měsíční dividendy v $SOL i USDC. Čím déle stakeujete, tím vyšší podíl dostáváte.</div>
+        </div>
+      </div>
+
+      <div class="fw-divider"></div>
+
+      <div class="fw-item fb">
+        <div class="fw-pct">75%</div>
+        <div class="fw-info">
+          <div class="fw-title">Zpětný odkup &amp; pálení</div>
+          <div class="fw-desc">Tři čtvrtiny zisku jsou použity na odkup tokenů z trhu a jejich trvalé spálení. Méně tokenů v oběhu → vyšší hodnota každého tokenu. Defláční mechanismus.</div>
+        </div>
+      </div>
+
+      <div class="fw-divider"></div>
+
+      <div class="fw-box">
+        <div class="fb-label">Jak flywheel funguje</div>
+        <div class="fb-flow">
+          Platforma roste <span>→</span> generuje příjmy<br>
+          Příjmy <span>→</span> 25% stakers + 75% burn<br>
+          Burn snižuje supply <span>→</span> cena $SOL roste<br>
+          Vyšší cena <span>→</span> více uživatelů &amp; liquidity<br>
+          Více uživatelů <span>→</span> vyšší příjmy platformy
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="foot">
+    <div class="foot-note">
+      Přesná čísla celkové nabídky tokenů, multiplikátory stakingu a podmínky milníků budou zveřejněny v
+      <span class="hl">oficiálním whitepaperu</span> nejpozději
+      <span class="hl">15. května 2026</span>. Veškeré transakce probíhají on-chain na síti Solana.
+    </div>
+    <div class="foot-mark">
+      <div class="wp">White<span>paper</span> · 05.26</div>
+      <div class="wp-date">Public release · 15.05.2026</div>
+    </div>
+  </footer>
+
+</div>
+</div>
+
+<div class="controls">
+  <button onclick="window.print()">Save as PDF</button>
+</div>
