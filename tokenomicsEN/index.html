@@ -150,6 +150,60 @@ h1.title .accent{color:var(--blue);}
 .v-red{color:var(--red);}
 .v-green{color:var(--green);}
 
+/* TOKEN INFO CARD */
+.tinfo{
+  display:grid;grid-template-columns:auto 1fr auto;
+  align-items:center;gap:32px;
+  padding:20px 48px;
+  background:var(--bg-2);
+  border-bottom:1px solid var(--line);
+}
+.tinfo-coin{
+  width:72px;height:72px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#6B75FF,#2A32CC);
+  box-shadow:0 0 32px rgba(85,93,255,0.5),0 0 64px rgba(85,93,255,0.18);
+  display:grid;place-items:center;flex-shrink:0;
+}
+.tinfo-coin span{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:20px;font-weight:800;color:#EAF0FF;letter-spacing:0.05em;
+}
+.tinfo-supply .ts-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;letter-spacing:0.25em;
+  color:var(--ink-mute);text-transform:uppercase;margin-bottom:5px;
+}
+.tinfo-supply .ts-val{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:34px;font-weight:800;color:var(--ink);line-height:1;letter-spacing:0.02em;
+}
+.tinfo-supply .ts-ticker{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;letter-spacing:0.18em;
+  color:var(--ink-mute);text-transform:uppercase;margin-top:5px;
+}
+.tinfo-stats{display:flex;flex-direction:column;min-width:230px;}
+.tinfo-stat{
+  display:grid;grid-template-columns:10px 1fr auto;
+  align-items:center;gap:12px;
+  padding:9px 0;border-bottom:1px solid var(--line-2);
+}
+.tinfo-stat:last-child{border-bottom:none;}
+.tinfo-stat .ts-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--green);box-shadow:0 0 6px rgba(56,224,161,0.6);
+}
+.tinfo-stat .ts-name{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;letter-spacing:0.2em;color:var(--ink);
+  text-transform:uppercase;font-weight:500;
+}
+.tinfo-stat .ts-status{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;letter-spacing:0.12em;
+  color:var(--green);text-transform:uppercase;
+}
+
 /* SECTION HEADER */
 .sec-head{
   padding:32px 48px 16px;
@@ -476,6 +530,33 @@ footer.foot{
     <div class="cell">
       <div class="k">Min. Valuation (Team Unlock)</div>
       <div class="v v-green">$300 M</div>
+    </div>
+  </div>
+
+  <!-- TOKEN INFO CARD -->
+  <div class="tinfo">
+    <div class="tinfo-coin"><span>$S</span></div>
+    <div class="tinfo-supply">
+      <div class="ts-label">Total Supply</div>
+      <div class="ts-val">1,000,000,000</div>
+      <div class="ts-ticker">$SOLIUS · Solana</div>
+    </div>
+    <div class="tinfo-stats">
+      <div class="tinfo-stat">
+        <div class="ts-dot"></div>
+        <div class="ts-name">Staking</div>
+        <div class="ts-status">3% APY</div>
+      </div>
+      <div class="tinfo-stat">
+        <div class="ts-dot"></div>
+        <div class="ts-name">Vesting</div>
+        <div class="ts-status">12 Months</div>
+      </div>
+      <div class="tinfo-stat">
+        <div class="ts-dot"></div>
+        <div class="ts-name">Distribution</div>
+        <div class="ts-status">Day 1</div>
+      </div>
     </div>
   </div>
 
