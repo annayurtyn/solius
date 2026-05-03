@@ -1,0 +1,838 @@
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #00091E;
+    --bg-2: #030F2A;
+    --bg-3: #081636;
+    --ink: #EAF0FF;
+    --ink-dim: #8A93B8;
+    --ink-mute: #4C5680;
+    --blue: #555DFF;
+    --blue-soft: rgba(85, 93, 255, 0.14);
+    --blue-edge: rgba(85, 93, 255, 0.35);
+    --red: #FF5558;
+    --red-soft: rgba(255, 85, 88, 0.14);
+    --red-edge: rgba(255, 85, 88, 0.35);
+    --green: #38E0A1;
+    --green-soft: rgba(56, 224, 161, 0.14);
+    --green-edge: rgba(56, 224, 161, 0.4);
+    --line: rgba(255,255,255,0.08);
+    --line-2: rgba(255,255,255,0.04);
+  }
+
+  html, body { margin: 0; padding: 0; background: #05070F; }
+  body {
+    font-family: 'Barlow', system-ui, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Page wrapper - A4 portrait at 96dpi = 794 x 1123; use 820 x 1160 for a comfortable fit */
+  .stage {
+    min-height: 100vh;
+    padding: 32px 16px 64px;
+    display: flex;
+    justify-content: center;
+  }
+  .page {
+    width: 820px;
+    background: var(--bg);
+    color: var(--ink);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
+  }
+
+  /* Subtle grid texture */
+  .page::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(85,93,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(85,93,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse at 70% 0%, black 0%, transparent 70%);
+  }
+
+  /* Ambient glow */
+  .page::after {
+    content: "";
+    position: absolute;
+    top: -200px; right: -180px;
+    width: 520px; height: 520px;
+    background: radial-gradient(circle, rgba(85,93,255,0.22), transparent 60%);
+    pointer-events: none;
+  }
+
+  .page > * { position: relative; z-index: 1; }
+
+  /* ---------- HEADER ---------- */
+  header.hero {
+    padding: 36px 48px 28px;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 1fr 160px 170px;
+    align-items: end;
+    gap: 24px;
+  }
+
+  .brand {
+    display: flex; align-items: center; gap: 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+  .brand .mark {
+    width: 36px; height: 36px;
+    background: var(--blue);
+    position: relative;
+    display: grid; place-items: center;
+    clip-path: polygon(15% 0, 100% 0, 85% 100%, 0 100%);
+  }
+  .brand .mark::before {
+    content: "";
+    width: 10px; height: 10px;
+    background: var(--bg);
+  }
+  .brand .name {
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    font-size: 22px;
+    text-transform: uppercase;
+  }
+
+  .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin: 0 0 10px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .kicker::after {
+    content: ""; flex: 1; height: 1px; background: var(--line);
+  }
+
+  h1.title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 72px;
+    line-height: 0.88;
+    letter-spacing: -0.01em;
+    margin: 6px 0 0;
+    text-transform: uppercase;
+  }
+  h1.title .accent { color: var(--blue); }
+
+  .hero-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    text-align: left;
+    line-height: 1.7;
+    padding-bottom: 4px;
+  }
+  .hero-meta b { color: var(--ink); font-weight: 500; }
+
+  /* ---------- SUBHEADER strip ---------- */
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--line);
+  }
+  .strip .cell {
+    padding: 14px 20px;
+    border-right: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .strip .cell:last-child { border-right: none; }
+  .strip .cell .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+  }
+  .strip .cell .v {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .strip .dot-mini { color: var(--blue); }
+
+  /* ---------- TIMELINE ---------- */
+  .tl-wrap {
+    padding: 40px 48px 32px;
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 0;
+    position: relative;
+  }
+
+  .tl-col-head {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    padding-bottom: 18px;
+    margin-bottom: 8px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .tl-col-head span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+  }
+
+  .phase {
+    display: contents;
+  }
+  .phase .date {
+    padding: 28px 20px 40px 0;
+    border-right: 1px solid var(--line);
+    text-align: right;
+    position: relative;
+  }
+  .phase .date .d-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .phase .date .d-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .phase .date .d-idx {
+    position: absolute;
+    top: -2px; left: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-mute);
+    letter-spacing: 0.2em;
+  }
+
+  .phase .content {
+    padding: 14px 0 40px 28px;
+    position: relative;
+  }
+
+  /* Dot on the line */
+  .phase .content::before {
+    content: "";
+    position: absolute;
+    left: -7px;
+    top: 32px;
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--ink-mute);
+    z-index: 2;
+  }
+  .phase.done .content::before { border-color: var(--green); background: var(--green); box-shadow: 0 0 0 4px rgba(56,224,161,0.12); }
+  .phase.upcoming .content::before { border-color: var(--blue); background: var(--blue); box-shadow: 0 0 0 4px rgba(85,93,255,0.14); }
+  .phase.token .content::before { border-color: var(--red); background: var(--red); box-shadow: 0 0 0 4px rgba(255,85,88,0.16); }
+
+  /* vertical connector line - drawn on .content */
+  .phase .content::after {
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: 40px;
+    bottom: -8px;
+    width: 1px;
+    background: var(--line);
+  }
+  .phase:last-child .content::after { display: none; }
+
+  .phase-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .phase-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .phase.done .phase-title { color: var(--ink); }
+  .phase.upcoming .phase-title { color: var(--ink); }
+  .phase.token .phase-title { color: var(--ink); }
+
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid;
+  }
+  .badge .dot { width: 6px; height: 6px; border-radius: 50%; }
+  .badge.live { color: var(--green); border-color: var(--green-edge); background: var(--green-soft); }
+  .badge.live .dot { background: var(--green); }
+  .badge.upcoming { color: var(--blue); border-color: var(--blue-edge); background: var(--blue-soft); }
+  .badge.upcoming .dot { background: var(--blue); }
+  .badge.token { color: var(--red); border-color: var(--red-edge); background: var(--red-soft); }
+  .badge.token .dot { background: var(--red); }
+
+  .ver {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    border: 1px solid var(--line);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag {
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 10px;
+    color: var(--ink);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--line);
+    letter-spacing: 0.01em;
+    line-height: 1;
+    white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .tag.key {
+    color: var(--blue);
+    background: var(--blue-soft);
+    border-color: var(--blue-edge);
+  }
+  .tag.hot {
+    color: var(--red);
+    background: var(--red-soft);
+    border-color: var(--red-edge);
+  }
+  .tag .glyph {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    opacity: 0.6;
+    letter-spacing: 0;
+  }
+
+  /* ---------- MASCOT ---------- */
+  .mascot-wrap {
+    position: relative;
+    width: 170px;
+    height: 180px;
+    align-self: end;
+    margin-bottom: -28px;
+    pointer-events: none;
+  }
+  .mascot-wrap .mascot-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    -webkit-mask-image: radial-gradient(ellipse at 50% 45%, black 35%, rgba(0,0,0,0.85) 55%, transparent 80%);
+            mask-image: radial-gradient(ellipse at 50% 45%, black 35%, rgba(0,0,0,0.85) 55%, transparent 80%);
+    filter: saturate(1.05) contrast(1.02);
+    mix-blend-mode: screen;
+    opacity: 0.95;
+  }
+  .mascot-wrap .mascot-caption {
+    position: absolute;
+    bottom: -4px;
+    left: 0; right: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.24em;
+    color: var(--ink-mute);
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer.foot {
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    padding: 22px 48px 28px;
+    align-items: center;
+  }
+  .foot-note {
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: var(--ink-dim);
+    line-height: 1.5;
+    max-width: 520px;
+  }
+  .foot-note .hl {
+    color: var(--ink);
+    font-weight: 600;
+    border-bottom: 1px solid var(--blue);
+    padding-bottom: 1px;
+  }
+  .foot-mark {
+    text-align: right;
+  }
+  .foot-mark .wp {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .foot-mark .wp span { color: var(--red); }
+  .foot-mark .wp-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin-top: 10px;
+  }
+
+  /* Legend row */
+  .legend {
+    display: flex;
+    gap: 18px;
+    padding: 14px 48px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: rgba(255,255,255,0.015);
+  }
+  .legend .item {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .legend .item .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+  .legend .g { background: var(--green); }
+  .legend .b { background: var(--blue); }
+  .legend .r { background: var(--red); }
+
+  /* Print controls floater */
+  .controls {
+    position: fixed;
+    bottom: 18px; right: 18px;
+    display: flex; gap: 8px;
+    z-index: 50;
+  }
+  .controls button {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: #0C1836;
+    color: #EAF0FF;
+    border: 1px solid rgba(85,93,255,0.4);
+    padding: 10px 14px;
+    cursor: pointer;
+  }
+  .controls button:hover { background: #152451; }
+
+  /* Corner markers for that "technical document" feel */
+  .corners span {
+    position: absolute;
+    width: 14px; height: 14px;
+    border: 1px solid var(--blue-edge);
+    z-index: 2;
+  }
+  .corners .tl { top: 14px; left: 14px; border-right: none; border-bottom: none; }
+  .corners .tr { top: 14px; right: 14px; border-left: none; border-bottom: none; }
+  .corners .bl { bottom: 14px; left: 14px; border-right: none; border-top: none; }
+  .corners .br { bottom: 14px; right: 14px; border-left: none; border-top: none; }
+
+  /* Document number */
+  .doc-num {
+    position: absolute;
+    top: 20px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    z-index: 2;
+  }
+
+  /* ---------- TOKENOMICS STRIP ---------- */
+  .tok-strip {
+    padding: 28px 48px 32px;
+    border-top: 1px solid var(--line);
+    background: rgba(255,255,255,0.012);
+  }
+  .tok-strip-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .tok-strip-head .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .tok-strip-head .lbl.accent { color: var(--blue); }
+  .tok-strip-head .rule { flex: 1; height: 1px; background: var(--line); }
+  .tok-body {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 36px;
+    align-items: center;
+  }
+  .tok-donut-mini {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    flex-shrink: 0;
+  }
+  .tok-donut-mini svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+  .tok-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .tok-center .tn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .tok-center .tn span { color: var(--blue); }
+  .tok-center .ts {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 0.18em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+  .tok-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px 24px;
+  }
+  .tok-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tok-row .sw {
+    width: 8px;
+    height: 8px;
+    border-radius: 1px;
+    background: var(--c);
+    flex-shrink: 0;
+  }
+  .tok-row .nm {
+    font-family: 'Barlow', sans-serif;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--ink);
+    flex: 1;
+    line-height: 1;
+  }
+  .tok-row .pct {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.04em;
+  }
+
+  /* ---- PRINT ---- */
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+  @media print {
+    html, body { background: var(--bg); }
+    .stage { padding: 0; min-height: auto; }
+    .page {
+      width: 210mm;
+      box-shadow: none;
+      page-break-after: avoid;
+    }
+    .controls { display: none !important; }
+  }
+</style>
+
+<div class="stage">
+  <div class="page" id="page">
+    <div class="corners">
+      <span class="tl"></span><span class="tr"></span>
+      <span class="bl"></span><span class="br"></span>
+    </div>
+    <div class="doc-num">SOL / DOC-003 · ROADMAP</div>
+
+    <!-- HEADER -->
+    <header class="hero">
+      <div>
+        <div class="brand">
+          <div class="mark"></div>
+          <div class="name">SOLIUS</div>
+        </div>
+        <p class="kicker">Public Roadmap · 2025 – 2026</p>
+        <h1 class="title">Road to<br><span class="accent">Mainnet.</span></h1>
+      </div>
+      <div class="hero-meta">
+        <div>Network · <b>Solana</b></div>
+        <div>Chain · <b>On-chain native</b></div>
+        <div>Issued · <b>20 Apr 2026</b></div>
+        <div>Rev. · <b>v1.2</b></div>
+      </div>
+      <div class="mascot-wrap">
+        <img class="mascot-img" src="assets/mascot_crop.jpg" alt="SOLIUS mascot" />
+        <div class="mascot-caption">SOL-01 · Mascot</div>
+      </div>
+    </header>
+
+    <!-- STRIP -->
+    <div class="strip">
+      <div class="cell">
+        <div class="k">Phases</div>
+        <div class="v"><span class="dot-mini">●</span> 05</div>
+      </div>
+      <div class="cell">
+        <div class="k">Status</div>
+        <div class="v">Alpha live</div>
+      </div>
+      <div class="cell">
+        <div class="k">Next milestone</div>
+        <div class="v">Beta · 01.05.2026</div>
+      </div>
+      <div class="cell">
+        <div class="k">Token launch</div>
+        <div class="v" style="color:var(--red)">Q4 2026</div>
+      </div>
+    </div>
+
+    <!-- LEGEND -->
+    <div class="legend">
+      <div class="item"><span class="dot g"></span>Completed</div>
+      <div class="item"><span class="dot b"></span>Upcoming release</div>
+      <div class="item"><span class="dot r"></span>Token / major event</div>
+      <div class="item" style="margin-left:auto">Source · solius_info_v1CZ</div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="tl-wrap">
+      <div class="tl-col-head">
+        <span>Date</span>
+        <span style="padding-left: 28px;">Phase · Scope</span>
+      </div>
+
+
+
+      <!-- PHASE 1: Alpha (done) -->
+      <div class="phase done">
+        <div class="date">
+          <div class="d-idx">01</div>
+          <div class="d-label">01.11.2025</div>
+          <div class="d-sub">Alpha / v0.0.1</div>
+        </div>
+        <div class="content">
+          <div class="phase-head">
+            <div class="phase-title">Alpha Release</div>
+            <span class="badge live"><span class="dot"></span>Live</span>
+            <span class="ver">v0.0.1</span>
+          </div>
+          <div class="tags">
+            <span class="tag">Core client</span>
+            <span class="tag">Early testers</span>
+            <span class="tag">Wallet connect</span>
+            <span class="tag">Solana integration</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 2: Beta (upcoming) -->
+      <div class="phase upcoming">
+        <div class="date">
+          <div class="d-idx">02</div>
+          <div class="d-label">01.05.2026</div>
+          <div class="d-sub">Official beta / v1.0.0</div>
+        </div>
+        <div class="content">
+          <div class="phase-head">
+            <div class="phase-title">Beta · Public Launch</div>
+            <span class="badge upcoming"><span class="dot"></span>Upcoming</span>
+            <span class="ver">v1.0.0</span>
+          </div>
+          <div class="tags">
+            <span class="tag key">Chat + in-chat payments</span>
+            <span class="tag">Paid groups &amp; channels</span>
+            <span class="tag key">Crypto identity</span>
+            <span class="tag">Multisig v1</span>
+            <span class="tag">Mission system</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 3: Q2 2026 -->
+      <div class="phase upcoming">
+        <div class="date">
+          <div class="d-idx">03</div>
+          <div class="d-label">Q2 2026</div>
+          <div class="d-sub">Identity &amp; paper</div>
+        </div>
+        <div class="content">
+          <div class="phase-head">
+            <div class="phase-title">Whitepaper &amp; Community</div>
+            <span class="badge upcoming"><span class="dot"></span>Upcoming</span>
+          </div>
+          <div class="tags">
+            <span class="tag key">Official whitepaper</span>
+            <span class="tag key">Tokenomics</span>
+            <span class="tag">Public crypto profiles</span>
+            <span class="tag">Communities</span>
+            <span class="tag">Portfolio management</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 4: Q3 2026 -->
+      <div class="phase upcoming">
+        <div class="date">
+          <div class="d-idx">04</div>
+          <div class="d-label">Q3 2026</div>
+          <div class="d-sub">Social + trading</div>
+        </div>
+        <div class="content">
+          <div class="phase-head">
+            <div class="phase-title">Marketplace &amp; Trading</div>
+            <span class="badge upcoming"><span class="dot"></span>Upcoming</span>
+          </div>
+          <div class="tags">
+            <span class="tag">Video calls</span>
+            <span class="tag">Voice messages</span>
+            <span class="tag key">On-chain multisig</span>
+            <span class="tag">Wallet management</span>
+            <span class="tag key">Marketplace &amp; business</span>
+            <span class="tag">In-chat trading</span>
+            <span class="tag key">Copytrading</span>
+            <span class="tag">Trading indexes</span>
+            <span class="tag">Strategy marketplace</span>
+            <span class="tag">Mass onboarding</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 5: Q4 2026 TOKEN -->
+      <div class="phase token">
+        <div class="date">
+          <div class="d-idx">05</div>
+          <div class="d-label">Q4 2026</div>
+          <div class="d-sub" style="color: var(--red)">Token generation event</div>
+        </div>
+        <div class="content">
+          <div class="phase-head">
+            <div class="phase-title">Token Launch &amp; DeFi</div>
+            <span class="badge token"><span class="dot"></span>Token Launch</span>
+          </div>
+          <div class="tags">
+            <span class="tag hot">$SOLIUS token launch</span>
+            <span class="tag hot">Perpetuals</span>
+            <span class="tag key">Native liquidity pools</span>
+            <span class="tag hot">Token launchpad</span>
+            <span class="tag key">Business tokenization</span>
+            <span class="tag">Automation suite</span>
+            <span class="tag">Marketplace v2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOKENOMICS STRIP -->
+    <div class="tok-strip">
+      <div class="tok-strip-head">
+        <div class="lbl">Token Allocation</div>
+        <div class="rule"></div>
+        <div class="lbl accent">$SOLIUS · 1,000,000,000 Supply · SPL</div>
+      </div>
+      <div class="tok-body">
+        <div class="tok-donut-mini">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <g stroke-width="14" fill="none">
+              <circle cx="50" cy="50" r="40" stroke="#FF5558" stroke-dasharray="87.97 163.36" stroke-dashoffset="0"/>
+              <circle cx="50" cy="50" r="40" stroke="#555DFF" stroke-dasharray="47.75 203.58" stroke-dashoffset="-87.97"/>
+              <circle cx="50" cy="50" r="40" stroke="#38E0A1" stroke-dasharray="30.16 221.17" stroke-dashoffset="-135.72"/>
+              <circle cx="50" cy="50" r="40" stroke="#F472B6" stroke-dasharray="27.65 223.68" stroke-dashoffset="-165.88"/>
+              <circle cx="50" cy="50" r="40" stroke="#FBBF24" stroke-dasharray="20.11 231.22" stroke-dashoffset="-193.53"/>
+              <circle cx="50" cy="50" r="40" stroke="#A78BFA" stroke-dasharray="37.70 213.63" stroke-dashoffset="-213.64"/>
+            </g>
+          </svg>
+          <div class="tok-center">
+            <div class="tn">1<span>B</span></div>
+            <div class="ts">$SOLIUS</div>
+          </div>
+        </div>
+        <div class="tok-grid">
+          <div class="tok-row"><span class="sw" style="--c:#FF5558"></span><span class="nm">Team</span><span class="pct">35%</span></div>
+          <div class="tok-row"><span class="sw" style="--c:#555DFF"></span><span class="nm">ICO</span><span class="pct">19%</span></div>
+          <div class="tok-row"><span class="sw" style="--c:#A78BFA"></span><span class="nm">Investors</span><span class="pct">15%</span></div>
+          <div class="tok-row"><span class="sw" style="--c:#38E0A1"></span><span class="nm">Staking</span><span class="pct">12%</span></div>
+          <div class="tok-row"><span class="sw" style="--c:#F472B6"></span><span class="nm">Airdrop</span><span class="pct">11%</span></div>
+          <div class="tok-row"><span class="sw" style="--c:#FBBF24"></span><span class="nm">Reserve</span><span class="pct">8%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="foot">
+      <div class="foot-note">
+        Everything on Solius runs fully on-chain and leverages revolutionary Solana technology.
+        The <span class="hl">final whitepaper and tokenomics</span> will be released no later than
+        <span class="hl">15 May 2026</span>.
+      </div>
+      <div class="foot-mark">
+        <div class="wp">White<span>paper</span> · 05.26</div>
+        <div class="wp-date">Public release · 15.05.2026</div>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<div class="controls">
+  <button onclick="window.print()">Save as PDF</button>
+</div>
